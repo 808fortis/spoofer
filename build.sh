@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
 if ! command -v cargo &> /dev/null; then
     echo "Rust is not installed. Install it from https://rustup.rs"
@@ -11,10 +11,10 @@ if ! command -v cargo-ndk &> /dev/null; then
     cargo install cargo-ndk
 fi
 
-echo "Adding Rust Android targets..."
-rustup target add aarch64-linux-android armv7-linux-androideabi x86_64-linux-android i686-linux-android
+echo "Adding Android aarch64 target..."
+rustup target add aarch64-linux-android
 
-if [ -z "$ANDROID_NDK_HOME" ]; then
+if [ -z "${ANDROID_NDK_HOME:-}" ]; then
     echo "ANDROID_NDK_HOME not set. Searching for NDK..."
     POSSIBLE_DIRS=(
         "$HOME/Android/Sdk/ndk"
@@ -33,35 +33,18 @@ if [ -z "$ANDROID_NDK_HOME" ]; then
     done
 fi
 
-if [ -z "$ANDROID_NDK_HOME" ]; then
+if [ -z "${ANDROID_NDK_HOME:-}" ]; then
     echo "ANDROID_NDK_HOME not set. Please set it to your NDK path."
     exit 1
 fi
 
 echo "Building for arm64-v8a..."
-cargo ndk -t arm64-v8a -o module/zygisk build --release 2>&1
-mv module/zygisk/arm64-v8a/libzygisk.so module/zygisk/arm64-v8a.so 2>/dev/null || true
+cargo ndk -t arm64-v8a -o module/zygisk build --release
+mv module/zygisk/arm64-v8a/libzygisk.so module/zygisk/arm64-v8a.so
 rm -rf module/zygisk/arm64-v8a
 
-echo "Building for armeabi-v7a..."
-cargo ndk -t armeabi-v7a -o module/zygisk build --release 2>&1
-mv module/zygisk/armeabi-v7a/libzygisk.so module/zygisk/armeabi-v7a.so 2>/dev/null || true
-rm -rf module/zygisk/armeabi-v7a
-
-echo "Building for x86_64..."
-cargo ndk -t x86_64 -o module/zygisk build --release 2>&1
-mv module/zygisk/x86_64/libzygisk.so module/zygisk/x86_64.so 2>/dev/null || true
-rm -rf module/zygisk/x86_64
-
-echo "Building for x86..."
-cargo ndk -t x86 -o module/zygisk build --release 2>&1
-mv module/zygisk/x86/libzygisk.so module/zygisk/x86.so 2>/dev/null || true
-rm -rf module/zygisk/x86
-
 echo "Creating module zip..."
-cd module
-zip -r9 ../zygisk_spoof.zip . -x ".*" -x "*/.*"
-cd ..
+(cd module && zip -r9 "$OLDPWD/zygisk_spoof.zip" . -x ".*" -x "*/.*")
 
 echo ""
 echo "Done! Module zip: zygisk_spoof.zip"
