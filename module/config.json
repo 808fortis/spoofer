@@ -1,0 +1,25 @@
+{
+    "Realme 14 / P3 5G (RMX5070)": {
+        "ro.product.manufacturer": "realme",
+        "ro.product.brand": "realme",
+        "ro.product.model": "RMX5070",
+        "ro.product.device": "RMX5070",
+        "ro.product.name": "RMX5070",
+        "ro.product.board": "volcano",
+        "ro.build.fingerprint": "realme/RMX5070/RMX5070:15/RMX5070export_15.0.0.710EX01/20250526:user/release-keys",
+        "ro.build.id": "RMX5070export_15.0.0.710EX01",
+        "ro.build.display.id": "RMX5070export_15.0.0.710EX01",
+        "ro.build.version.release": "15",
+        "ro.build.version.sdk": "35",
+        "ro.build.version.security_patch": "2025-05-05",
+        "ro.build.version.codename": "REL",
+        "ro.build.version.incremental": "202505261856",
+        "ro.build.type": "user",
+        "ro.build.tags": "release-keys",
+        "ro.build.description": "RMX5070-user 15 RMX5070export_15.0.0.710EX01 20250526 release-keys",
+        "ro.hardware": "volcano",
+        "ro.soc.manufacturer": "Qualcomm",
+        "ro.board.platform": "sm6650",
+        "target": ["com.dts.freefiremax", "com.dts.freefireth"]
+    }
+}

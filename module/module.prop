@@ -1,0 +1,6 @@
+id=zygisk_spoof
+name=Device Spoofer
+version=v1.0.0
+versionCode=100
+author=?
+description=Device spoofer based on Zygisk

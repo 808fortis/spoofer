@@ -1,0 +1,7 @@
+target/
+module/zygisk/*.so
+zygisk_spoof.zip
+*.swp
+*.swo
+*~
+.DS_Store
