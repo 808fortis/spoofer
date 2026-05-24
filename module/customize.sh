@@ -11,4 +11,3 @@ ui_print "- Removing placeholder files"
 rm -f "$MODPATH/zygisk/placeholder"
 
 ui_print "- Zygisk Spoofer installed"
-ui_print "- Edit /data/adb/modules/zygisk_spoof/config.json to configure"

@@ -8,8 +8,6 @@ name = "zygisk"
 crate-type = ["cdylib"]
 
 [dependencies]
-serde = { version = "*", features = ["derive"] }
-serde_json = "*"
 libc = "*"
 
 [profile.release]
