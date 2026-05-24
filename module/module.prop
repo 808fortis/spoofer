@@ -1,6 +1,7 @@
 id=zygisk_spoof
-name=Device Spoofer
+name=Zygisk Spoofer
 version=v1.0.0
 versionCode=100
-author=?
-description=Device spoofer based on Zygisk
+author=808fortis
+description=Spoof device via Zygisk to unlock game graphics
+support=https://github.com/808fortis/zygisk-spoof
