@@ -27,11 +27,9 @@ jobs:
         with:
           ndk-version: r27c
 
-      - name: Set version from CI run number
-        run: sed -i "s/^version=v.*/&-ci${{ github.run_number }}/" module/module.prop
-
       - name: Build
         run: |
+          sed -i "s/^version=v.*/&-ci${{ github.run_number }}/" module/module.prop
           cargo ndk -t arm64-v8a -o module/zygisk build --release
           mv module/zygisk/arm64-v8a/libzygisk.so module/zygisk/arm64-v8a.so
           rm -rf module/zygisk/arm64-v8a
