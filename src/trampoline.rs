@@ -1,5 +1,5 @@
 use std::ptr;
-use std::sync::atomic::AtomicUsize;
+use std::sync::atomic::{AtomicUsize, Ordering, compiler_fence};
 use libc::{self, c_char, c_void};
 
 #[inline(always)]
@@ -75,11 +75,13 @@ pub unsafe fn install(
     let jmp = jump_stub((target as usize) + 16);
     ptr::copy_nonoverlapping(jmp.as_ptr(), (tramp as usize + 16) as *mut u8, 16);
 
-    orig_out.store(tramp as usize, std::sync::atomic::Ordering::Relaxed);
+    orig_out.store(tramp as usize, Ordering::Release);
+    compiler_fence(Ordering::SeqCst);
 
     let stub = jump_stub(handler);
     ptr::copy_nonoverlapping(stub.as_ptr(), target as *mut u8, 16);
 
+    compiler_fence(Ordering::SeqCst);
     icache_sync(target as *mut c_void, (target as usize + 16) as *mut c_void);
     icache_sync(tramp, (tramp as usize + 32) as *mut c_void);
 
